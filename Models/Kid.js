@@ -1,5 +1,5 @@
 // import mongoose
-const {mongoose} = require('../index');
+const mongoose = require('../Controllers/connection.js');
 
 // create kid schema
 const kidSchema = new mongoose.Schema({

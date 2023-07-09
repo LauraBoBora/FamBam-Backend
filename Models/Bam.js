@@ -1,8 +1,8 @@
 // import mongoose
-const mongoose = require('../index.js');
+const mongoose = require('../Controllers/connection.js');
 
 // create bam schema
-const bamSchema = new mongoose.Schema({
+const BamSchema = new mongoose.Schema({
     bamName: String,
     description: String,
     points: Number,
@@ -13,6 +13,6 @@ const bamSchema = new mongoose.Schema({
 });
 
 // create bam model
-const Bam = mongoose.model('Bam', bamSchema);
+const Bam = mongoose.model('Bam', BamSchema);
 
 module.export = Bam;

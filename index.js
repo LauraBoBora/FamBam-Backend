@@ -1,50 +1,57 @@
 // dependencies
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-const { MONGO_URL, PORT } = process.env;
+const { PORT } = process.env;
+const morgan = require("morgan")
 
-// mongoose
-mongoose
-  .connect(MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB is  connected successfully"))
-  .catch((err) => console.error(err));
-
-// export mongoose 
-module.exports = mongoose 
-
-// make auth and bam "home" routes
+// routes
 const authRoute = require("./Routes/AuthRoute");
-app.use("/", authRoute);
+// const bamRouter = require('./Controllers/bam');
 
-const bamRouter = require('./Controllers/bam');
-app.use("/bams", bamRouter);
+// middleware
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
+
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(express.json());
+
+app.use("/", authRoute);
+// app.use("/bams", bamRouter);
+
+app.get('/', (req, res) => {
+  res.send('hello')
+})
 
 // listening
 app.listen(PORT, () => {
   console.log(`🥔 Server is listening on port ${PORT}`);
 });
 
-// middleware
-app.use(
-    // cross origin resource sharing
-    cors({
-      origin: ["http://localhost:3000"],
-      methods: ["GET", "POST", "PUT", "DELETE"],
-      credentials: true,
-    })
-  );
+// require('dotenv').config()
+// const { PORT, MONGODB_URL } = process.env;
+// const express = require('express')
+// const cors = require('cors')
+// const morgan = require('morgan')
+// const app = express()
+// const boardRouter = require('./controllers/board')
+// const cardRouter = require('./controllers/card')
+// const taskRouter = require('./controllers/task')
 
-app.use(cookieParser());
-  
-app.use(express.json());
+//middleware
+// app.use(cors())
+// app.use(morgan('dev'))
+// app.use(express.json())
+// app.use('/boards', boardRouter);
+// app.use('/boards/:boardId/cards', cardRouter);
+// app.use('/boards/:boardId/cards/:cardId/tasks', taskRouter);
 
-app.get('/', (req, res) => {
-  res.send('hello')
-})
+
+// app.listen(PORT, () => console.log(`listening on PORT ${PORT}`))

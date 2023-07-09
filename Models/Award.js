@@ -1,9 +1,9 @@
 // import mongoose
-const {mongoose} = require('../index');
+const mongoose = require('../Controllers/connection.js');
 
 // create award schema
 const awardSchema = new mongoose.Schema({
-    name: String,
+    awardName: String,
     points: Number,
     householdId: String
 });

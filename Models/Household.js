@@ -1,5 +1,5 @@
 // import mongoose
-const {mongoose} = require('../index');
+const mongoose = require('../Controllers/connection.js');
 
 // create household schema
 const householdSchema = new mongoose.Schema({
@@ -9,7 +9,7 @@ const householdSchema = new mongoose.Schema({
     awards: Array
 });
 
-// create household model
+// create  model
 const Household = mongoose.model('Household', householdSchema);
 
 module.exports = Household;

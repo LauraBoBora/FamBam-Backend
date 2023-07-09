@@ -1,7 +1,7 @@
 // make user schema, password, hashes pw 
 // https://www.freecodecamp.org/news/how-to-secure-your-mern-stack-application/
 
-const mongoose = require("mongoose");
+const mongoose = require("../Controllers/connection.js");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
