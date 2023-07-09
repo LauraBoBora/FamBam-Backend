@@ -5,7 +5,6 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-const authRoute = require("./Routes/AuthRoute");
 const { MONGO_URL, PORT } = process.env;
 
 // mongoose
@@ -18,7 +17,14 @@ mongoose
   .catch((err) => console.error(err));
 
 // export mongoose 
-module.exports = { mongoose }
+module.exports = mongoose 
+
+// make auth and bam "home" routes
+const authRoute = require("./Routes/AuthRoute");
+app.use("/", authRoute);
+
+const bamRouter = require('./Controllers/bam');
+app.use("/bams", bamRouter);
 
 // listening
 app.listen(PORT, () => {
@@ -35,8 +41,10 @@ app.use(
     })
   );
 
-  app.use(cookieParser());
+app.use(cookieParser());
   
-  app.use(express.json());
+app.use(express.json());
 
-  app.use("/", authRoute);
+app.get('/', (req, res) => {
+  res.send('hello')
+})

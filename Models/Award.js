@@ -3,7 +3,7 @@ const {mongoose} = require('../index');
 
 // create award schema
 const awardSchema = new mongoose.Schema({
-    awardName: String,
+    name: String,
     points: Number,
     householdId: String
 });

@@ -1,9 +1,9 @@
 // import mongoose
-const {mongoose} = require('../index');
+const mongoose = require('../index.js');
 
 // create bam schema
 const bamSchema = new mongoose.Schema({
-    name: String,
+    bamName: String,
     description: String,
     points: Number,
     householdId: String,
@@ -15,4 +15,4 @@ const bamSchema = new mongoose.Schema({
 // create bam model
 const Bam = mongoose.model('Bam', bamSchema);
 
-module.exports = Bam;
+module.export = Bam;
