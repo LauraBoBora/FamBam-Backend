@@ -9,7 +9,7 @@ const morgan = require("morgan")
 
 // routes
 const authRoute = require("./Routes/AuthRoute");
-// const bamRouter = require('./Controllers/bam');
+const householdRoute = require('./Routes/HouseholdRoute');
 
 // middleware
 const corsOptions ={
@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/", authRoute);
-// app.use("/bams", bamRouter);
+app.use("/household", householdRoute);
 
 app.get('/', (req, res) => {
   res.send('hello')

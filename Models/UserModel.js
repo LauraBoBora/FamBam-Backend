@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  householdId: {
+    type: String,
+    default: null,
+  },
 });
 
 userSchema.pre("save", async function () {

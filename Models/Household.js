@@ -3,6 +3,8 @@ const mongoose = require('../Controllers/connection.js');
 
 // create household schema
 const householdSchema = new mongoose.Schema({
+    householdName: String,
+    householdId: String,
     parents: Array,
     kids: Array,
     chores: Array,
