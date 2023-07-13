@@ -9,7 +9,7 @@ module.exports.GetHousehold = async (req, res) => {
 module.exports.CreateHousehold = async (req, res) => {
     try {
         const householdName = await Household.create(req.body);
-        res.json(householdName)
+        res.json(householdName);
     } catch (error) {
         res.status(400).json(error);
       }
