@@ -9,7 +9,8 @@ const morgan = require("morgan")
 
 // routes
 const authRoute = require("./Routes/AuthRoute");
-const householdRoute = require('./Routes/HouseholdRoute');
+const householdRoute = require("./Routes/HouseholdRoute");
+const kidsRoute = require("./Routes/KidsRoute");
 
 // middleware
 const corsOptions ={
@@ -25,6 +26,7 @@ app.use(express.json());
 
 app.use("/", authRoute);
 app.use("/household", householdRoute);
+app.use("/kids", kidsRoute);
 
 app.get('/', (req, res) => {
   res.send('hello')
@@ -34,24 +36,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`🥔 Server is listening on port ${PORT}`);
 });
-
-// require('dotenv').config()
-// const { PORT, MONGODB_URL } = process.env;
-// const express = require('express')
-// const cors = require('cors')
-// const morgan = require('morgan')
-// const app = express()
-// const boardRouter = require('./controllers/board')
-// const cardRouter = require('./controllers/card')
-// const taskRouter = require('./controllers/task')
-
-//middleware
-// app.use(cors())
-// app.use(morgan('dev'))
-// app.use(express.json())
-// app.use('/boards', boardRouter);
-// app.use('/boards/:boardId/cards', cardRouter);
-// app.use('/boards/:boardId/cards/:cardId/tasks', taskRouter);
-
-
-// app.listen(PORT, () => console.log(`listening on PORT ${PORT}`))

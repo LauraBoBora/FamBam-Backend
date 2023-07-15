@@ -16,7 +16,7 @@ module.exports.userVerification = (req, res) => {
      return res.json({ status: false })
     } else {
       const user = await User.findById(data.id)
-      if (user) return res.json({ status: true, user: user.username, userHHId: user.householdId })
+      if (user) return res.json({ status: true, user: user.username, householdId: user.householdId })
       else return res.json({ status: false })
     }
   })
@@ -26,7 +26,7 @@ module.exports.userVerification = (req, res) => {
 // https://www.youtube.com/watch?v=Yh5Lil03tpI
 module.exports.verify = (req, res, next) => {
   const authHeader = req.cookies.token;
-  console.log(authHeader);
+  console.log("authHeader: ", authHeader);
   if (authHeader) {
     jwt.verify(authHeader, process.env.TOKEN_KEY, async (err, user) => {
       if (err) {
