@@ -5,10 +5,6 @@ const mongoose = require('../Controllers/connection.js');
 const householdSchema = new mongoose.Schema({
     householdName: String,
     householdId: String,
-    parents: Array,
-    kids: Array,
-    chores: Array,
-    awards: Array
 });
 
 // create  model

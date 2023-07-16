@@ -8,8 +8,18 @@ const BamSchema = new mongoose.Schema({
     points: Number,
     householdId: String,
     dueDate: Date,
-    assignee: String,
-    completed: Boolean
+    assignee: {
+        type: String,
+        default: "Unassigned"
+    },
+    completed: {
+        type: Boolean,
+        default: false
+    },
+    verified: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 // create bam model

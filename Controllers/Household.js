@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
 const Household = require('../Models/Household');
 const UserModel = require('../Models/UserModel');
+const Bam = require('../Models/Bam');
+const Award = require('../Models/Award');
 
 module.exports.GetHousehold = async (req, res) => {
     try {
@@ -20,7 +20,7 @@ module.exports.CreateHousehold = async (req, res) => {
         } else {
             // create household, add parent's id to household obj
             console.log(req.user.id);
-            const newHousehold = {householdName: req.body.householdName, parents: [req.user.id]};
+            const newHousehold = {householdName: req.body.householdName};
             const householdName = await Household.create(newHousehold);
             console.log(householdName);
             // update user(parent) obj with household id
@@ -36,8 +36,13 @@ module.exports.CreateHousehold = async (req, res) => {
 
 module.exports.DeleteHousehold = async (req, res) => {
     try {
-        const household = await Household.findByIdAndDelete(req.params.id);
-        res.json(household);
+        const household = await Household.findByIdAndDelete(req.body.householdId);
+        const deleteHHFromUser = await UserModel.updateMany({householdId: req.body.householdId}, {$set: {householdId: null}});
+        const deletedUsers = await UserModel.deleteMany({householdId: req.body.householdId});
+        const deletedBams = await Bam.deleteMany({householdId: req.body.householdId});
+        const deletedAwards = await Award.deleteMany({householdId: req.body.householdId});
+        console.log(deleteHHFromUser);
+        res.staus(204).json(household);
     } catch (error) {
         res.status(400).json(error);
     }
