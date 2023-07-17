@@ -1,6 +1,7 @@
 // https://www.freecodecamp.org/news/how-to-secure-your-mern-stack-application/
 
 const User = require("../Models/UserModel");
+const Kid = require("../Models/Kid");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
@@ -15,7 +16,13 @@ module.exports.userVerification = (req, res) => {
     if (err) {
      return res.json({ status: false })
     } else {
-      const user = await User.findById(data.id)
+      let user = await User.findById(data.id);
+      if (!user) {
+        user = await Kid.findById(data.id);
+        user.isParent = false;
+      } else {
+        user.isParent = true;
+      }
       if (user) return res.json({ status: true, user: user.username, householdId: user.householdId })
       else return res.json({ status: false })
     }
@@ -32,7 +39,14 @@ module.exports.verify = (req, res, next) => {
       if (err) {
         return res.status(403).json("Token is not valid!");
       }
-      req.user = await User.findById(user.id);
+      let u = await User.findById(user.id);
+      if (!u) {
+        u = await Kid.findById(user.id);
+        u.isParent = false;
+      } else {
+        u.isParent = true;
+      }
+      req.user = u;
       // do next function in route (CreateHousehold)
       next();
     });

@@ -24,7 +24,7 @@ module.exports.UpdateKid = async (req, res) => {
         const kid = await Kid.findById(kidId);
         if (req.user.householdId === kid.householdId) {
             console.log("Updating Kid: " + kidId);
-            const update = await Kid.findByIdAndUpdate(req.body);
+            const update = await Kid.findByIdAndUpdate(kidId, req.body);
             res.status(200).json(update);
         } else {
             res.status(404).json({error: "Kid not found"});
@@ -44,7 +44,7 @@ module.exports.DeleteKid = async (req, res) => {
         // todo: user.isParent check?
         if (req.user.householdId === kid.householdId) {
             console.log("Deleting Kid: " + kidId);
-            const update = await Kid.findByIdDelete(req.body);
+            const update = await Kid.findByIdAndDelete(kidId);
             res.status(200).json(update);
         } else {
             res.status(404).json({error: "Kid not found"});
@@ -60,11 +60,10 @@ module.exports.CreateKid = async (req, res) => {
     try {
         // create new kid, add household id
         console.log(req.body);
-        const newKiddo = {kidUserName: req.body.kidUserName, password: req.body.kidPW, householdId: req.user.householdId};
+        const newKiddo = {username: req.body.kidUserName, password: req.body.kidPW, householdId: req.user.householdId};
         const newKid = await Kid.create(newKiddo);
         console.log(newKid);
         // update household with Kid
-        Household.updateOne({_id: req.user.householdId}, {$push: {kids: newKid.id}});
         res.status(201).json(newKid);
     }
     catch (error) {
