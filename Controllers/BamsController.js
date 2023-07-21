@@ -4,8 +4,9 @@ const Bam = require('../Models/Bam');
 // GET /bams
 module.exports.GetBams = async (req, res) => {
     try {
+        console.log("Getting Bams...", Bam);
         const query = { householdId: req.user.householdId };
-        const bams = await bams.find(query);
+        const bams = await Bam.find(query);
         // const household = await Household.findById(req.user.householdId);
         console.log(bams);
         res.status(200).json(bams);
@@ -110,13 +111,14 @@ module.exports.DeleteBam = async (req, res) => {
     }
 }
 
-// POST /bam
+// POST /bams
 module.exports.CreateBam = async (req, res) => {
     try {
         // create new bam
-        console.log(req.body);
+        req.body.householdId = req.user.householdId
+        // console.log(req.body);
         const newBam = await Bam.create(req.body);
-        console.log(newBam);
+        // console.log(newBam);
         res.status(201).json(newBam);
     }
     catch (error) {

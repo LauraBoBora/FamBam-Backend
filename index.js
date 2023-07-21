@@ -11,6 +11,7 @@ const morgan = require("morgan")
 const authRoute = require("./Routes/AuthRoute");
 const householdRoute = require("./Routes/HouseholdRoute");
 const kidsRoute = require("./Routes/KidsRoute");
+const bamsRoute = require("./Routes/BamsRoute");
 
 // middleware
 const corsOptions ={
@@ -27,6 +28,8 @@ app.use(express.json());
 app.use("/", authRoute);
 app.use("/household", householdRoute);
 app.use("/kids", kidsRoute);
+app.use("/bams", bamsRoute);
+
 
 app.get('/', (req, res) => {
   res.send('hello')

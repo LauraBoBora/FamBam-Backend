@@ -39,9 +39,12 @@ module.exports.verify = (req, res, next) => {
       if (err) {
         return res.status(403).json("Token is not valid!");
       }
+      // try to get from user table
       let u = await User.findById(user.id);
+      // if not, check kid's table
       if (!u) {
         u = await Kid.findById(user.id);
+        // makes value of isParent on user
         u.isParent = false;
       } else {
         u.isParent = true;

@@ -25,4 +25,4 @@ const BamSchema = new mongoose.Schema({
 // create bam model
 const Bam = mongoose.model('Bam', BamSchema);
 
-module.export = Bam;
+module.exports = Bam;

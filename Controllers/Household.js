@@ -3,6 +3,7 @@ const UserModel = require('../Models/UserModel');
 const Bam = require('../Models/Bam');
 const Award = require('../Models/Award');
 
+// GET /household
 module.exports.GetHousehold = async (req, res) => {
     try {
         res.status(200).json(await Household.findById(req.user.householdId));
@@ -12,6 +13,7 @@ module.exports.GetHousehold = async (req, res) => {
     }
 }
 
+// POST /household
 module.exports.CreateHousehold = async (req, res) => {
     try {
         // if there's already a household for the parent, don't create
@@ -34,6 +36,20 @@ module.exports.CreateHousehold = async (req, res) => {
       }
 }
 
+
+// PUT /household
+module.exports.UpdateHousehold = async (req, res) => {
+    try {
+        const householdId = req.user.householdId;
+        const household = await Household.findByIdAndUpdate(householdId, {householdName: req.body.householdName});
+        res.status(200).json(household)
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(error);
+    }
+}
+
+// DELETE /household
 module.exports.DeleteHousehold = async (req, res) => {
     try {
         const household = await Household.findByIdAndDelete(req.body.householdId);
