@@ -16,6 +16,18 @@ module.exports.GetKids = async (req, res) => {
     }
 }
 
+// GET /kids
+module.exports.GetKid = async (req, res) => {
+    try {
+        const query = { householdId: req.user.householdId, _id: req.params.kidId };
+        const kid = await Kid.findOne(query);
+        res.status(200).json(kid);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(error);
+    }
+}
+
 // PUT /kids/:kidId
 // todo: user.isParent check?
 module.exports.UpdateKid = async (req, res) => {

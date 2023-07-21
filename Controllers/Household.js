@@ -40,9 +40,13 @@ module.exports.CreateHousehold = async (req, res) => {
 // PUT /household
 module.exports.UpdateHousehold = async (req, res) => {
     try {
-        const householdId = req.user.householdId;
-        const household = await Household.findByIdAndUpdate(householdId, {householdName: req.body.householdName});
-        res.status(200).json(household)
+        if (req.user.isParent) {
+            const householdId = req.user.householdId;
+            const household = await Household.findByIdAndUpdate(householdId, {householdName: req.body.householdName});
+            res.status(200).json(household);
+        } else {
+            res.status(403).json({error: "Not Authorized"});
+        }
     } catch (error) {
         console.log(error);
         res.status(400).json(error);
@@ -52,13 +56,17 @@ module.exports.UpdateHousehold = async (req, res) => {
 // DELETE /household
 module.exports.DeleteHousehold = async (req, res) => {
     try {
-        const household = await Household.findByIdAndDelete(req.body.householdId);
-        const deleteHHFromUser = await UserModel.updateMany({householdId: req.body.householdId}, {$set: {householdId: null}});
-        const deletedUsers = await UserModel.deleteMany({householdId: req.body.householdId});
-        const deletedBams = await Bam.deleteMany({householdId: req.body.householdId});
-        const deletedAwards = await Award.deleteMany({householdId: req.body.householdId});
-        console.log(deleteHHFromUser);
-        res.staus(204).json(household);
+        if (req.user.isParent) {
+            const household = await Household.findByIdAndDelete(req.body.householdId);
+            const deleteHHFromUser = await UserModel.updateMany({householdId: req.body.householdId}, {$set: {householdId: null}});
+            const deletedUsers = await UserModel.deleteMany({householdId: req.body.householdId});
+            const deletedBams = await Bam.deleteMany({householdId: req.body.householdId});
+            const deletedAwards = await Award.deleteMany({householdId: req.body.householdId});
+            console.log(deleteHHFromUser);
+            res.staus(204).json(household);
+        } else { 
+            res.status(403).json({error: "Not Authorized"});
+        }
     } catch (error) {
         res.status(400).json(error);
     }

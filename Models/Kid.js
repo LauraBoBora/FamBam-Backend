@@ -7,7 +7,10 @@ const kidSchema = new mongoose.Schema({
     username: String,
     password: String,
     householdId: String,
-    awardPoints: Number
+    awardPoints: {
+        type: Number,
+        default: 0
+    },
 });
 
 kidSchema.pre("save", async function () {

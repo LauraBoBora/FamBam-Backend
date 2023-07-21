@@ -43,7 +43,7 @@ module.exports.Login = async (req, res, next) => {
     console.log(user);
     if(!user){
       console.log("Didn't find it in User's table");
-      user = await Kid.findOne({ kidUserName: { $eq: username }});
+      user = await Kid.findOne({ username: { $eq: username }});
       console.log(user);
       if(!user){
         return res.json({message:'Incorrect password or username' }) 

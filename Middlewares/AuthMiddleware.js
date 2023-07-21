@@ -17,13 +17,14 @@ module.exports.userVerification = (req, res) => {
      return res.json({ status: false })
     } else {
       let user = await User.findById(data.id);
+      let isParent = false;
       if (!user) {
         user = await Kid.findById(data.id);
-        user.isParent = false;
+        isParent = false;
       } else {
-        user.isParent = true;
+        isParent = true;
       }
-      if (user) return res.json({ status: true, user: user.username, householdId: user.householdId })
+      if (user) return res.json({ status: true, user: user.username, householdId: user.householdId, isParent: isParent})
       else return res.json({ status: false })
     }
   })
