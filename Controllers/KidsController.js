@@ -5,9 +5,8 @@ const UserModel = require('../Models/UserModel');
 // GET /kids
 module.exports.GetKids = async (req, res) => {
     try {
-        const query = { householdId: req.user.householdId };
+        const query = {householdId: req.user.householdId};
         const kids = await Kid.find(query);
-        // const household = await Household.findById(req.user.householdId);
         console.log(kids);
         res.status(200).json(kids);
     } catch (error) {
@@ -16,10 +15,10 @@ module.exports.GetKids = async (req, res) => {
     }
 }
 
-// GET /kids
+// GET /kids/:kidId
 module.exports.GetKid = async (req, res) => {
     try {
-        const query = { householdId: req.user.householdId, _id: req.params.kidId };
+        const query = {householdId: req.user.householdId, _id: req.params.kidId};
         const kid = await Kid.findOne(query);
         res.status(200).json(kid);
     } catch (error) {
@@ -52,7 +51,6 @@ module.exports.DeleteKid = async (req, res) => {
     try {
         const kidId = req.params.kidId;
         const kid = await Kid.findById(kidId);
-        // make sure we should be allowed to do this
         // todo: user.isParent check?
         if (req.user.householdId === kid.householdId) {
             console.log("Deleting Kid: " + kidId);

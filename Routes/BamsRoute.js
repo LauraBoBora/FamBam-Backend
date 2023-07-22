@@ -6,12 +6,12 @@ const { CreateBam, GetBams, UpdateBam, DeleteBam, ClaimBam, VerifyBam, CompleteB
 // routes have CRUD methods attached
 // when they're called, controller will be executed
 router.get("/", verify, GetBams);
+router.post("/", verify, CreateBam);
+router.delete("/:bamId", verify, DeleteBam);
 router.put("/:bamId", verify, UpdateBam);
 router.put("/:bamId/claim", verify, ClaimBam);
 router.put("/:bamId/verify", verify, VerifyBam);
 router.put("/:bamId/complete", verify, CompleteBam);
 router.put("/:bamId/reset", verify, ResetBam);
-router.post("/", verify, CreateBam);
-router.delete("/:bamId", verify, DeleteBam);
 
 module.exports = router;
