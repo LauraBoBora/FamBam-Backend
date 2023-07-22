@@ -15,7 +15,7 @@ const bamsRoute = require("./Routes/BamsRoute");
 
 // middleware
 const corsOptions ={
-    origin:'http://localhost:3000', 
+    origin:'https://fambam-frontend.onrender.com', 
     credentials:true,
     optionSuccessStatus:200
 }
